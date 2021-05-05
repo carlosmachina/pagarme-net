@@ -38,7 +38,9 @@ using System.Linq;
 using System.Threading.Tasks;
 
 #if HAS_ASYNC
+#pragma warning disable CS0105 // Using directive appeared previously in this namespace
 using System.Threading.Tasks;
+#pragma warning restore CS0105 // Using directive appeared previously in this namespace
 #endif
 
 namespace PagarMe

@@ -11,72 +11,72 @@ using System.IO;
 
 namespace PagarMe.Tests
 {
-    public class PagarMeTestFixture
-    {
+	public class PagarMeTestFixture
+	{
 
-        static PagarMeTestFixture ()
-        {
-            PagarMeService.DefaultApiKey = "ak_test_RBORKsHflgcrO7gISMyhatMx8UyiJY";
-            PagarMeService.DefaultEncryptionKey = "ek_test_Ajej5CakM8QXGnA2lWX3AarwLWqspL";
-        }
+		static PagarMeTestFixture ()
+		{
+			PagarMeService.DefaultApiKey = "ak_test_RBORKsHflgcrO7gISMyhatMx8UyiJY";
+			PagarMeService.DefaultEncryptionKey = "ek_test_Ajej5CakM8QXGnA2lWX3AarwLWqspL";
+		}
 
-        public static Recipient CreateRecipientWithAnotherBankAccount()
-        {
-            BankAccount bank = new BankAccount
-            {
-                BankCode = "341",
-                Agencia = "0609",
-                Conta = "03032",
-                ContaDv = "5",
-                DocumentNumber = "44417398850",
-                LegalName = "Fellipe xD"
-            };
+		public static Recipient CreateRecipientWithAnotherBankAccount()
+		{
+			BankAccount bank = new BankAccount
+			{
+				BankCode = "341",
+				Agencia = "0609",
+				Conta = "03032",
+				ContaDv = "5",
+				DocumentNumber = "44417398850",
+				LegalName = "Fellipe xD"
+			};
 
-            bank.Save();
+			bank.Save();
 
-            return new Recipient()
-            {
-                TransferInterval = TransferInterval.Monthly,
-                TransferDay = 5,
-                TransferEnabled = true,
-                BankAccount = bank
-            };
-        }
+			return new Recipient()
+			{
+				TransferInterval = TransferInterval.Monthly,
+				TransferDay = 5,
+				TransferEnabled = true,
+				BankAccount = bank
+			};
+		}
 
-        public static Recipient CreateRecipient(BankAccount bank)
-        {
-            return new Recipient()
-            {
-                TransferInterval = TransferInterval.Monthly,
-                TransferDay = 5,
-                TransferEnabled = true,
-                BankAccount = bank
-            };
-        }
+		public static Recipient CreateRecipient(BankAccount bank)
+		{
+			return new Recipient()
+			{
+				TransferInterval = TransferInterval.Monthly,
+				TransferDay = 5,
+				TransferEnabled = true,
+				BankAccount = bank
+			};
+		}
 
-        public static Recipient CreateRecipient()
-        {
-            BankAccount bank = CreateTestBankAccount();
-            bank.Save();
-            return new Recipient()
-            {
-                TransferInterval = TransferInterval.Daily,
-                AnticipatableVolumePercentage = 100,
-                TransferEnabled = true,
-                BankAccount = bank
-            };
+		public static Recipient CreateRecipient()
+		{
+			BankAccount bank = CreateTestBankAccount();
+			bank.Save();
+			return new Recipient()
+			{
+				TransferInterval = TransferInterval.Daily,
+				AnticipatableVolumePercentage = 100,
+				TransferEnabled = true,
+				BankAccount = bank
+			};
 
-        }
+		}
 
-        public static Transfer CreateTestTransfer(string bank_account_id,string recipient_id)
-        {
-            return new Transfer
-            {
-                Amount = 1000,
-                RecipientId = recipient_id,
-                BankAccountId = bank_account_id
-            };
-        }
+		public static Transfer CreateTestTransfer(string bank_account_id,string recipient_id)
+		{
+			return new Transfer
+			{
+				Amount = 1000,
+				RecipientId = recipient_id,
+				BankAccountId = bank_account_id
+			};
+		}
 
 		public static Plan CreateTestPlan()
 		{
@@ -88,25 +88,25 @@ namespace PagarMe.Tests
 				Amount = 1099,
 				Color = "#787878",
 				PaymentMethods = new PaymentMethod[] { PaymentMethod.CreditCard },
-                InvoiceReminder = 3
+				InvoiceReminder = 3
 			};
 		}
 
-        public static Plan CreateBoletoPlan()
-        {
-            return new Plan()
-            {
-                Name = "Test Plan",
-                Days = 30,
-                TrialDays = 0,
-                Amount = 1099,
-                Color = "#787878",
-                PaymentMethods = new PaymentMethod[] { PaymentMethod.Boleto },
-                InvoiceReminder = 3
-            };
-        }
+		public static Plan CreateBoletoPlan()
+		{
+			return new Plan()
+			{
+				Name = "Test Plan",
+				Days = 30,
+				TrialDays = 0,
+				Amount = 1099,
+				Color = "#787878",
+				PaymentMethods = new PaymentMethod[] { PaymentMethod.Boleto },
+				InvoiceReminder = 3
+			};
+		}
 
-        public static BankAccount CreateTestBankAccount()
+		public static BankAccount CreateTestBankAccount()
 		{
 			return new BankAccount()
 			{
@@ -120,47 +120,47 @@ namespace PagarMe.Tests
 			};
 		}
 
-        public static BulkAnticipation CreateBulkAnticipation()
-        {
-            return new BulkAnticipation()
-            {
-                Timeframe = TimeFrame.Start,
-                PaymentDate = GenerateValidAnticipationDate(),
-                RequestedAmount = 900000,
-                Build = false
-            };
-        }
+		public static BulkAnticipation CreateBulkAnticipation()
+		{
+			return new BulkAnticipation()
+			{
+				Timeframe = TimeFrame.Start,
+				PaymentDate = GenerateValidAnticipationDate(),
+				RequestedAmount = 900000,
+				Build = false
+			};
+		}
 
-        public static BulkAnticipation CreateBulkAnticipationWithBuildTrue()
-        {
-            return new BulkAnticipation()
-            {
-                Timeframe = TimeFrame.Start,
-                PaymentDate = GenerateValidAnticipationDate(),
-                Build = true,
-                RequestedAmount = 900000
-            };
-        }
+		public static BulkAnticipation CreateBulkAnticipationWithBuildTrue()
+		{
+			return new BulkAnticipation()
+			{
+				Timeframe = TimeFrame.Start,
+				PaymentDate = GenerateValidAnticipationDate(),
+				Build = true,
+				RequestedAmount = 900000
+			};
+		}
 
-        public static Transaction BoletoTransactionPaidWithPostbackURL()
-        {
-            var transaction = new Transaction
-            {
-                Amount = 1099,
-                PaymentMethod = PaymentMethod.Boleto,
-                Customer = new Customer
-                {
-                    Name = "Aadwark Silva",
-                    DocumentNumber = "64302475200"
-                },
-                PostbackUrl = "https://apitest.me/handlepostback"
-            };
-            transaction.Save();
-            transaction.Status = TransactionStatus.Paid;
-            transaction.Save();
+		public static Transaction BoletoTransactionPaidWithPostbackURL()
+		{
+			var transaction = new Transaction
+			{
+				Amount = 1099,
+				PaymentMethod = PaymentMethod.Boleto,
+				Customer = new Customer
+				{
+					Name = "Aadwark Silva",
+					DocumentNumber = "64302475200"
+				},
+				PostbackUrl = "https://apitest.me/handlepostback"
+			};
+			transaction.Save();
+			transaction.Status = TransactionStatus.Paid;
+			transaction.Save();
 
-            return transaction;
-        }
+			return transaction;
+		}
 
 		public static async Task PayBoletoTransaction(Transaction t)
 		{
@@ -179,82 +179,82 @@ namespace PagarMe.Tests
 			};
 		}
 
-        public static Transaction CreateTestBoletoTransaction()
-        {
-            return new Transaction
-            {
-                Amount = 100000,
-                PaymentMethod = PaymentMethod.Boleto,
-                Customer = new Customer
-                {
-                    Name = "Aadwark Silva",
-                    DocumentNumber = "64302475200"
-                }
-            };
+		public static Transaction CreateTestBoletoTransaction()
+		{
+			return new Transaction
+			{
+				Amount = 100000,
+				PaymentMethod = PaymentMethod.Boleto,
+				Customer = new Customer
+				{
+					Name = "Aadwark Silva",
+					DocumentNumber = "64302475200"
+				}
+			};
 
-        }
+		}
 
-        public static Transaction CreateTestCardTransactionWithInstallments()
-        {
-            return new Transaction
-            {
-                Amount = 1099,
-                PaymentMethod = PaymentMethod.CreditCard,
-                Installments = 5,
-                CardHash = GetCardHash()
-            };
-        }
+		public static Transaction CreateTestCardTransactionWithInstallments()
+		{
+			return new Transaction
+			{
+				Amount = 1099,
+				PaymentMethod = PaymentMethod.CreditCard,
+				Installments = 5,
+				CardHash = GetCardHash()
+			};
+		}
 
-        public static Transaction CreateBoletoSplitRuleTransaction(Recipient recipient)
-        {
-            return new Transaction
-            {
-                Amount = 10000,
-                PaymentMethod = PaymentMethod.Boleto,
-                Customer = new Customer
-                {
-                    Name = "Aadwark Silva",
-                    DocumentNumber = "64302475200"
-                },
-                SplitRules = CreateSplitRule(recipient)
-            };
-        }
+		public static Transaction CreateBoletoSplitRuleTransaction(Recipient recipient)
+		{
+			return new Transaction
+			{
+				Amount = 10000,
+				PaymentMethod = PaymentMethod.Boleto,
+				Customer = new Customer
+				{
+					Name = "Aadwark Silva",
+					DocumentNumber = "64302475200"
+				},
+				SplitRules = CreateSplitRule(recipient)
+			};
+		}
 
-        public static Transaction CreateCreditCardSplitRuleTransaction(Recipient recipient)
-        {
-            return new Transaction
-            {
-                Amount = 1000000,
-                PaymentMethod = PaymentMethod.CreditCard,
-                CardHash = GetCardHash(),
-                SplitRules = CreateSplitRule(recipient)
-            };
-        }
+		public static Transaction CreateCreditCardSplitRuleTransaction(Recipient recipient)
+		{
+			return new Transaction
+			{
+				Amount = 1000000,
+				PaymentMethod = PaymentMethod.CreditCard,
+				CardHash = GetCardHash(),
+				SplitRules = CreateSplitRule(recipient)
+			};
+		}
 
 
-        public static SplitRule[] CreateSplitRule(Recipient recipient)
-        {
-            List<SplitRule> splits = new List<SplitRule>();
-            Recipient rec = CreateRecipient();
-            rec.Save();
+		public static SplitRule[] CreateSplitRule(Recipient recipient)
+		{
+			List<SplitRule> splits = new List<SplitRule>();
+			Recipient rec = CreateRecipient();
+			rec.Save();
 
-            SplitRule split1 = new SplitRule()
-            {
-                Recipient = rec,
-                Percentage = 10
-            };
+			SplitRule split1 = new SplitRule()
+			{
+				Recipient = rec,
+				Percentage = 10
+			};
 
-            SplitRule split2 = new SplitRule()
-            {
-                Recipient = recipient,
-                Percentage = 90
-            };
+			SplitRule split2 = new SplitRule()
+			{
+				Recipient = recipient,
+				Percentage = 90
+			};
 
-            splits.Add(split1);
-            splits.Add(split2);
+			splits.Add(split1);
+			splits.Add(split2);
 
-            return splits.ToArray();
-        }
+			return splits.ToArray();
+		}
 
 		public static string GetCardHash()
 		{
@@ -268,58 +268,58 @@ namespace PagarMe.Tests
 			return creditcard.Generate();
 		}
 
-        public static Payable returnPayable(int id)
-        {
-            return PagarMeService.GetDefaultService().Payables.Find(id);
-        }
+		public static Payable returnPayable(int id)
+		{
+			return PagarMeService.GetDefaultService().Payables.Find(id);
+		}
 
-        public static DateTime GenerateValidAnticipationDate()
-        {
-            DateTime Today = new DateTime();
-            Today = DateTime.Now;
+		public static DateTime GenerateValidAnticipationDate()
+		{
+			DateTime Today = new DateTime();
+			Today = DateTime.Now;
 
-            DateTime AnticipationDate = new DateTime();
-            AnticipationDate = Today.AddDays(5);
+			DateTime AnticipationDate = new DateTime();
+			AnticipationDate = Today.AddDays(5);
 
-            while (!isValidDay(AnticipationDate))
-            {
-                AnticipationDate = AnticipationDate.AddDays(2);
-            }
-            return AnticipationDate;
-        }
+			while (!isValidDay(AnticipationDate))
+			{
+				AnticipationDate = AnticipationDate.AddDays(2);
+			}
+			return AnticipationDate;
+		}
 
-        private static Boolean isValidDay(DateTime AnticipationDate)
-        {
-            return !(AnticipationDate.DayOfWeek == DayOfWeek.Sunday || AnticipationDate.DayOfWeek == DayOfWeek.Saturday || isHoliday(AnticipationDate));
-        }
+		private static Boolean isValidDay(DateTime AnticipationDate)
+		{
+			return !(AnticipationDate.DayOfWeek == DayOfWeek.Sunday || AnticipationDate.DayOfWeek == DayOfWeek.Saturday || isHoliday(AnticipationDate));
+		}
 
-        private static Boolean isHoliday(DateTime AnticipationDate)
-        {
-            var Holidays = GetPagarMeOfficialHolidays(AnticipationDate);
+		private static Boolean isHoliday(DateTime AnticipationDate)
+		{
+			var Holidays = GetPagarMeOfficialHolidays(AnticipationDate);
 
-            return Holidays.Any(AnticipationDate.ToString("yyyy-MM-dd").Contains);
-        }
+			return Holidays.Any(AnticipationDate.ToString("yyyy-MM-dd").Contains);
+		}
 
-        private static List<string> GetPagarMeOfficialHolidays(DateTime AnticipationDate)
-        {
-            string HolidayCalendarPath = "https://raw.githubusercontent.com/pagarme/business-calendar/master/data/brazil/";
-            Uri CalendarURL = new Uri(HolidayCalendarPath + AnticipationDate.Year.ToString() + ".json");
-            var request = (HttpWebRequest)WebRequest.Create(CalendarURL);
-            var response = (HttpWebResponse)request.GetResponse();
+		private static List<string> GetPagarMeOfficialHolidays(DateTime AnticipationDate)
+		{
+			string HolidayCalendarPath = "https://raw.githubusercontent.com/pagarme/business-calendar/master/data/brazil/";
+			Uri CalendarURL = new Uri(HolidayCalendarPath + AnticipationDate.Year.ToString() + ".json");
+			var request = (HttpWebRequest)WebRequest.Create(CalendarURL);
+			var response = (HttpWebResponse)request.GetResponse();
 
-            var PagarMeCalendarString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-            JObject PagarMeCalendarJson = JsonConvert.DeserializeObject<JObject>(PagarMeCalendarString);
+			var PagarMeCalendarString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+			JObject PagarMeCalendarJson = JsonConvert.DeserializeObject<JObject>(PagarMeCalendarString);
 
-            var PagarMeCalendar = PagarMeCalendarJson["calendar"];
+			var PagarMeCalendar = PagarMeCalendarJson["calendar"];
 
-            var Holidays = new List<string>();
+			var Holidays = new List<string>();
 
-            foreach (var CalendarDay in PagarMeCalendar)
-            {
-                Holidays.Add(CalendarDay["date"].ToString());
-            };
+			foreach (var CalendarDay in PagarMeCalendar)
+			{
+				Holidays.Add(CalendarDay["date"].ToString());
+			};
 
-            return Holidays;
-        }
-    }
+			return Holidays;
+		}
+	}
 }
