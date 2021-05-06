@@ -206,7 +206,7 @@ namespace PagarMe.Base
             return keys.ToDictionary((x) => x.Key, (x) => x.Value);
         }
 
-        internal string ToJson(SerializationType type = SerializationType.Shallow)
+        public string ToJson(SerializationType type = SerializationType.Shallow)
         {
             return JsonConvert.SerializeObject(ToDictionary(type));
         }

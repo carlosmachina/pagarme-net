@@ -31,7 +31,7 @@ using System.Runtime.Serialization;
 
 namespace PagarMe.Base
 {
-    internal static class EnumMagic
+    public static class EnumMagic
     {
 
         private class EnumDescriptor
